@@ -1,21 +1,41 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Empresa.Projeto.Domain
 {
     [Table("Usuario")]
-    public class Usuario
+    public class Usuario : Base
     {
-        [Key]
-        public int Id { get; set; }     
-        public string Nome { get; set; }
-        public string Sobrenome { get; set; }
-        public string Apelido { get; set; }
-        public string Email { get; set; }
-        public string Senha { get; set; }   
-        public int Status { get; set; }
-        public DateTime? CriadoEm { get; set; }
-        public DateTime? AlteradoEm { get; set; }
+        // Propriedades
+        public string Nome { get; private set; }
+        public string Sobrenome { get; private set; }
+        public string Apelido { get; private set; }
+        public string Email { get; private set; }
+        public string Senha { get; private set; }
+        public int Status { get; private set; }
+        public DateTime? CriadoEm { get; private set; }
+        public DateTime? AlteradoEm { get; private set; }
+
+        // EF
+        protected Usuario() { }
+
+        public Usuario(string nome,
+                       string sobrenome,
+                       string apelido,
+                       string email,
+                       string senha,
+                       int status,
+                       DateTime? criadoEm,
+                       DateTime? alteradoEm)
+        {
+            Nome = nome;
+            Sobrenome = sobrenome;
+            Apelido = apelido;
+            Email = email;
+            Senha = senha;
+            Status = status;
+            CriadoEm = criadoEm;
+            AlteradoEm = alteradoEm;
+        }
     }
 }

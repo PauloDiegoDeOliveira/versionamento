@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Empresa.Projeto.Domain\Empresa.Projeto.Domain.csproj" />
     <ProjectReference Include="..\Empresa.Projeto.Service\Empresa.Projeto.Service.csproj" />
   </ItemGroup>

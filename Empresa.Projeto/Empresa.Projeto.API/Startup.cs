@@ -1,16 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Empresa.Projeto.API
 {
@@ -23,32 +15,64 @@ namespace Empresa.Projeto.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+
+            services.AddJwtTConfiguration(Configuration);
+
+            services.AddFluentValidationConfiguration();
+
+            services.AddAutoMapperConfiguration();
+
+            services.AddDatabaseConfiguration(Configuration);
+
+            services.AddDependencyInjectionConfiguration();
+
+            services.AddSwaggerConfiguration();
+
+            #region :: CORS ::
+
+            services.AddCors(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Empresa.Projeto.API", Version = "v1" });
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    var origins = Configuration.GetValue<string>("CorsOrigins").Split(";");
+                    builder
+                        .WithOrigins(origins)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
             });
+
+            #endregion :: CORS ::
+
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Empresa.Projeto.API", Version = "v1" });
+            //});
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Empresa.Projeto.API v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Empresa.Projeto.API v1"));
             }
+
+            app.UseDatabaseConfiguration();
+
+            app.UseSwaggerConfiguration(env);
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
+
+            //app.UseJwtConfiguration();
 
             app.UseEndpoints(endpoints =>
             {
