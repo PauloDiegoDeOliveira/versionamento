@@ -1,13 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Empresa.Projeto.Domain
 {
-    [Table("Usuario")]
     public class Usuario : Base
     {
         // Propriedades
         public string Nome { get; private set; }
+
         public string Sobrenome { get; private set; }
         public string Apelido { get; private set; }
         public string Email { get; private set; }
@@ -17,7 +16,8 @@ namespace Empresa.Projeto.Domain
         public DateTime? AlteradoEm { get; private set; }
 
         // EF
-        protected Usuario() { }
+        protected Usuario()
+        { }
 
         public Usuario(string nome,
                        string sobrenome,
