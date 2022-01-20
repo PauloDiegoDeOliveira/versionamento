@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Empresa.Projeto.API.Controllers.V1
+namespace Empresa.Projeto.API.V2.Controllers  
 {
-    [Route("[controller]")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/usuario")]  
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -20,7 +21,7 @@ namespace Empresa.Projeto.API.Controllers.V1
         /// Retorna todos os usuários.
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("/api/v1/usuario/obter-tudo")]
+        [HttpGet, Route("/api/v2/usuario/obter-tudo")]
         public async Task<IActionResult> GetAllAsync()
         {
             var consulta = await usuarioService.GetAllAsync();
@@ -28,7 +29,6 @@ namespace Empresa.Projeto.API.Controllers.V1
             {
                 return Ok(consulta);
             }
-
             return NotFound(new { mensagem = "Nenhum usuário foi encontrado." });
         }
     }

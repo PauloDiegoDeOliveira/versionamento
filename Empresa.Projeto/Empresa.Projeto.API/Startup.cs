@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -46,6 +48,29 @@ namespace Empresa.Projeto.API
             });
 
             #endregion :: CORS ::
+
+            #region :: Versionamento ::
+
+            services.AddApiVersioning(o =>
+            {
+                o.UseApiBehavior = false;
+                o.ReportApiVersions = true;
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+
+                o.ApiVersionReader = ApiVersionReader.Combine(
+                    //new HeaderApiVersionReader("x-api-version"),
+                    //new QueryStringApiVersionReader(),
+                    new UrlSegmentApiVersionReader());
+            });
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+            #endregion
 
             //services.AddSwaggerGen(c =>
             //{

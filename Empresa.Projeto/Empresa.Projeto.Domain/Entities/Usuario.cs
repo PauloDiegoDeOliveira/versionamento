@@ -6,7 +6,6 @@ namespace Empresa.Projeto.Domain
     {
         // Propriedades
         public string Nome { get; private set; }
-
         public string Sobrenome { get; private set; }
         public string Apelido { get; private set; }
         public string Email { get; private set; }
