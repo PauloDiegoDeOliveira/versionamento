@@ -10,7 +10,7 @@ namespace Empresa.Projeto.Infra
 
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
