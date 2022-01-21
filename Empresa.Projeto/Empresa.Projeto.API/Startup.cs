@@ -37,7 +37,7 @@ namespace Empresa.Projeto.API
             }
 
             app.UseDatabaseConfiguration();
-            app.UseSwaggerConfig(provider);
+            app.UseSwaggerConfig(provider, env);
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
