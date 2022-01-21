@@ -11,8 +11,8 @@ namespace Empresa.Projeto.Domain
         public string Email { get; private set; }
         public string Senha { get; private set; }
         public int Status { get; private set; }
-        public DateTime? CriadoEm { get; private set; }
-        public DateTime? AlteradoEm { get; private set; }
+        public DateTime? CriadoEm { get; private set; } 
+        public DateTime? AlteradoEm { get; private set; }  
 
         // EF
         protected Usuario()

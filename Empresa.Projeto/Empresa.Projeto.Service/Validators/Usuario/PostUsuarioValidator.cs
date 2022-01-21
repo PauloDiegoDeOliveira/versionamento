@@ -18,6 +18,10 @@ namespace Empresa.Projeto.Service
 
                 .MaximumLength(1000)
                 .WithMessage("O nome deve ter no máximo 100 caracteres.");
+
+            RuleFor(x => x.Email)
+                .EmailAddress()
+                .WithMessage("O e-mail informado não é válido.");
         }
     }
 }
