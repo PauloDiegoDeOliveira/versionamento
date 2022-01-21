@@ -29,8 +29,12 @@ namespace Empresa.Projeto.API.V1.Controllers
             {
                 return Ok(consulta);
             }
-
             return NotFound(new { mensagem = "Nenhum usuário foi encontrado." });
         }
     }
 }
+
+//TODO: CTRL M O fechar
+//TODO: CTRL M L abrir
+//TODO: CTRL K X listar Snippet
+//TODO: CTRL SHIFT V copiar e colar avançado
