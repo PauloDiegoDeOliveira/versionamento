@@ -1,67 +1,52 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace Empresa.Projeto.API
 {
     public static class SwaggerConfig
     {
-        public static void AddSwaggerConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddSwaggerConfig(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerDefaultValues>();
 
-                //c.SwaggerDoc("v1",
-                //    new OpenApiInfo
-                //    {
-                //        Title = "Projeto",
-                //        Version = "v1",
-                //        Description = "API da aplicação Projeto."
-                //    });
-
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    In = ParameterLocation.Header,
-                    Description = "Autenticação baseada em Json Web Token (JWT) Exemplo: \"Bearer 12345abcdef\"",
+                    Description = "Insira o token JWT desta maneira: Bearer {seu token}",
                     Name = "Authorization",
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey
                 });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    new OpenApiSecurityScheme
                     {
-                        Reference= new OpenApiReference
+                        new OpenApiSecurityScheme
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id ="Bearer"
-                        }
-                    },
-                        new string[]{ }
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
                     }
                 });
-
-                //c.AddFluentValidationRules();
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-                //xmlPath = Path.Combine(AppContext.BaseDirectory, "Projeto.Compartilhado.xml");
-                //c.IncludeXmlComments(xmlPath);
             });
+
+            return services;
         }
 
-        public static void UseSwaggerConfiguration(this IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+        public static IApplicationBuilder UseSwaggerConfig(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             app.UseSwagger();
             app.UseSwaggerUI(
@@ -72,6 +57,8 @@ namespace Empresa.Projeto.API
                         options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                     }
                 });
+
+            return app;
         }
     }
 
@@ -95,7 +82,7 @@ namespace Empresa.Projeto.API
             {
                 Title = "API",
                 Version = description.ApiVersion.ToString(),
-                Description = "API"
+                Description = "Esta API faz parte do projeto.",
             };
 
             if (description.IsDeprecated)

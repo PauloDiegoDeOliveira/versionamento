@@ -24,7 +24,7 @@ namespace Empresa.Projeto.API
             services.AddAutoMapperConfiguration();
             services.AddDatabaseConfiguration(Configuration);
             services.AddDependencyInjectionConfiguration();
-            services.AddSwaggerConfiguration();
+            services.AddSwaggerConfig();
             services.AddCorsConfiguration(Configuration);
             services.AddVersionConfiguration();             
         }
@@ -37,7 +37,7 @@ namespace Empresa.Projeto.API
             }
 
             app.UseDatabaseConfiguration();
-            app.UseSwaggerConfiguration(env, provider);
+            app.UseSwaggerConfig(provider);
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");

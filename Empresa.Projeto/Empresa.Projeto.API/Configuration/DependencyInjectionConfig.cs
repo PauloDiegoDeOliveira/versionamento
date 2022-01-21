@@ -2,6 +2,8 @@
 using Empresa.Projeto.Infra.Repositories;
 using Empresa.Projeto.Service;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Empresa.Projeto.API
 {
@@ -11,6 +13,7 @@ namespace Empresa.Projeto.API
         {
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         }
     }
 }

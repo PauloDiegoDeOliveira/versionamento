@@ -4,16 +4,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Empresa.Projeto.API
 {
-    public static class VersionConfig 
+    public static class VersionConfig
     {
-        public static void AddVersionConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddVersionConfiguration(this IServiceCollection services)
         {
             services.AddApiVersioning(o =>
             {
                 o.UseApiBehavior = false;
                 o.ReportApiVersions = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
-                o.AssumeDefaultVersionWhenUnspecified = true;              
+                o.AssumeDefaultVersionWhenUnspecified = true;
                 o.ApiVersionReader = ApiVersionReader.Combine(
                     //new HeaderApiVersionReader("x-api-version"),
                     //new QueryStringApiVersionReader(),
@@ -29,8 +29,9 @@ namespace Empresa.Projeto.API
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
-
             });
+
+            return services;
         }
     }
 }
