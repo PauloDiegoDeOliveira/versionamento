@@ -10,9 +10,7 @@ namespace Empresa.Projeto.Service
         {
             CreateMap<PostUsuario, Usuario>()
                   .ForMember(d => d.CriadoEm, o => o.MapFrom(x => DateTime.Now));
-
             CreateMap<Usuario, ViewUsuario>();
-
             CreateMap<Usuario, ViewLogin>().ReverseMap();
         }
     }
