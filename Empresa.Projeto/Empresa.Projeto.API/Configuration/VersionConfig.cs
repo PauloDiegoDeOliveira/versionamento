@@ -12,8 +12,8 @@ namespace Empresa.Projeto.API
             {
                 o.UseApiBehavior = false;
                 o.ReportApiVersions = true;
-                o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
+                o.AssumeDefaultVersionWhenUnspecified = true;              
                 o.ApiVersionReader = ApiVersionReader.Combine(
                     //new HeaderApiVersionReader("x-api-version"),
                     //new QueryStringApiVersionReader(),
@@ -24,6 +24,12 @@ namespace Empresa.Projeto.API
             {
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
+            });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+
             });
         }
     }

@@ -21,7 +21,7 @@ namespace Empresa.Projeto.API.V1.Controllers
         /// Retorna todos os usuários.
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("/api/v1/usuario/obter-tudo")]
+        [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var consulta = await usuarioService.GetAllAsync();
