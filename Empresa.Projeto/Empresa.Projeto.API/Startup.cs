@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +29,7 @@ namespace Empresa.Projeto.API
             services.AddVersionConfiguration();             
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -36,7 +37,7 @@ namespace Empresa.Projeto.API
             }
 
             app.UseDatabaseConfiguration();
-            app.UseSwaggerConfiguration(env);
+            app.UseSwaggerConfiguration(env, provider);
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
