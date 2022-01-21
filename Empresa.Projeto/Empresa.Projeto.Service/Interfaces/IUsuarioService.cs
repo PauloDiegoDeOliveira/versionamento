@@ -5,6 +5,7 @@ namespace Empresa.Projeto.Service
 {
     public interface IUsuarioService
     {
-        Task<List<ViewUsuario>> GetAllAsync();      
+        Task<List<ViewUsuario>> GetAllAsync();
+        Task<List<ViewUsuario>> GetBuscarNomeAsync(string nome); 
     }
 }

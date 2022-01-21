@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Empresa.Projeto.Domain;
 using Empresa.Projeto.Infra;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,6 +22,16 @@ namespace Empresa.Projeto.Service
         {
             var consulta = await usuarioRepository.GetAllAsync();
             return mapper.Map<List<ViewUsuario>>(consulta);
-        }      
+        }
+
+        public async Task<List<ViewUsuario>> GetBuscarNomeAsync(string nome)
+        {
+            IEnumerable<Usuario> consulta = await usuarioRepository.GetBuscarNomeAsync(nome);
+            if (consulta == null)
+            {
+                return null;
+            }
+            return mapper.Map<List<ViewUsuario>>(consulta);
+        }
     }
 }

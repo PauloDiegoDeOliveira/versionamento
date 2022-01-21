@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Empresa.Projeto.API.V1.Controllers 
+namespace Empresa.Projeto.API.V1.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/usuario")]  
+    [Route("api/v{version:apiVersion}/usuario")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -30,6 +30,21 @@ namespace Empresa.Projeto.API.V1.Controllers
                 return Ok(consulta);
             }
             return NotFound(new { mensagem = "Nenhum usuário foi encontrado." });
+        }
+
+        /// <summary>
+        /// Retorna um usuário consultado pelo nome.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("buscar-nome")]
+        public async Task<IActionResult> GetBuscarNomeAsync(string nome)
+        {
+            var consulta = await usuarioService.GetBuscarNomeAsync(nome);
+            if (consulta.Any())
+            {
+                return Ok(consulta);
+            }
+            return NotFound(new { mensagem = "Nenhum usuário foi encontrado com o nome informado" });
         }
     }
 }
