@@ -24,11 +24,31 @@ namespace Empresa.Projeto.Service
             return mapper.Map<List<ViewUsuario>>(consulta);
         }
 
-        public async Task<ViewUsuario> GetByIdAsync(int id) 
+        public async Task<ViewUsuario> GetByIdAsync(int id)
         {
             var consulta = await usuarioRepository.GetByIdAsync(id);
             return mapper.Map<ViewUsuario>(consulta);
         }
+
+        public async Task<ViewUsuario> PostAsync(PostUsuario post)
+        {
+            var consulta = mapper.Map<Usuario>(post);
+            consulta = await usuarioRepository.PostAsync(consulta);
+            return mapper.Map<ViewUsuario>(consulta);
+        }
+
+        public async Task<ViewUsuario> PutAsync(PutUsuario put)
+        {
+            var consulta = mapper.Map<Usuario>(put);
+            consulta = await usuarioRepository.PutAsync(consulta);
+            return mapper.Map<ViewUsuario>(consulta);
+        }
+
+        public async Task<ViewUsuario> DeleteAsync(int id) 
+        {
+            var consulta = await usuarioRepository.DeleteAsync(id);
+            return mapper.Map<ViewUsuario>(consulta);
+        }       
 
         public async Task<List<ViewUsuario>> GetBuscarNomeAsync(string nome)
         {
