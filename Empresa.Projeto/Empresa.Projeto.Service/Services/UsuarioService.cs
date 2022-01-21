@@ -24,9 +24,15 @@ namespace Empresa.Projeto.Service
             return mapper.Map<List<ViewUsuario>>(consulta);
         }
 
+        public async Task<ViewUsuario> GetByIdAsync(int id) 
+        {
+            var consulta = await usuarioRepository.GetByIdAsync(id);
+            return mapper.Map<ViewUsuario>(consulta);
+        }
+
         public async Task<List<ViewUsuario>> GetBuscarNomeAsync(string nome)
         {
-            IEnumerable<Usuario> consulta = await usuarioRepository.GetBuscarNomeAsync(nome);
+            List<Usuario> consulta = await usuarioRepository.GetBuscarNomeAsync(nome);
             if (consulta == null)
             {
                 return null;

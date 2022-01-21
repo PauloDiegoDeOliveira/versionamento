@@ -33,6 +33,22 @@ namespace Empresa.Projeto.API.V1.Controllers
         }
 
         /// <summary>
+        /// Retorna um usuário consultado via id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id:int}")]      
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var consultado = await usuarioService.GetByIdAsync(id);
+            if (consultado == null)
+            {
+                return NotFound(new { mensagem = "Nenhum usuário foi encontrado com o id informado." });
+            };
+            return Ok(consultado);
+        }
+
+        /// <summary>
         /// Retorna um usuário consultado pelo nome.
         /// </summary>
         /// <returns></returns>

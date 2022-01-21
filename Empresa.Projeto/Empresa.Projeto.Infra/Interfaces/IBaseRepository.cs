@@ -6,6 +6,8 @@ namespace Empresa.Projeto.Infra
 {
     public interface IBaseRepository<T> where T : Base
     {      
-        Task<List<T>> GetAllAsync(); 
+        Task<List<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id); 
+        
     }
 }
