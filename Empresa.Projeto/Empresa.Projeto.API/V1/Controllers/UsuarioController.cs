@@ -29,7 +29,6 @@ namespace Empresa.Projeto.API.V1.Controllers
             {
                 return Ok(consulta);
             }
-
             return NotFound(new { mensagem = "Nenhum usuário foi encontrado." });
         }
 
@@ -46,7 +45,6 @@ namespace Empresa.Projeto.API.V1.Controllers
             {
                 return NotFound(new { mensagem = "Nenhum usuário foi encontrado com o id informado." });
             }
-
             return Ok(consultado);
         }
 
@@ -59,7 +57,6 @@ namespace Empresa.Projeto.API.V1.Controllers
         public async Task<IActionResult> PostAsync([FromBody] PostUsuario post)
         {
             var inserido = await usuarioService.PostAsync(post);
-
             return Ok(new { mensagem = "Usuário criado com sucesso!" });
         }
 
@@ -76,7 +73,6 @@ namespace Empresa.Projeto.API.V1.Controllers
             {
                 return NotFound(new { mensagem = "Nenhum usuário foi encontrado com o id informado." });
             }
-
             return Ok(new { mensagem = "Usuário atualizado com sucesso!" });
         }
 
@@ -93,7 +89,6 @@ namespace Empresa.Projeto.API.V1.Controllers
             {
                 return NotFound(new { mensagem = "Nenhum usuário foi encontrado com o id informado." });
             }
-
             return Ok(new { mensagem = "Usuário removido com sucesso!" });
         }
 
@@ -114,7 +109,4 @@ namespace Empresa.Projeto.API.V1.Controllers
     }
 }
 
-//TODO: CTRL M O fechar
-//TODO: CTRL M L abrir
-//TODO: CTRL K X listar Snippet
-//TODO: CTRL SHIFT V copiar e colar avançado
+
