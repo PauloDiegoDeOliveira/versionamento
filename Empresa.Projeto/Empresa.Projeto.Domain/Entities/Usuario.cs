@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Empresa.Projeto.Domain
 {
@@ -11,13 +12,16 @@ namespace Empresa.Projeto.Domain
         public string Email { get; private set; }
         public string Senha { get; private set; }
         public int Status { get; private set; }
-        public DateTime? CriadoEm { get; private set; } 
-        public DateTime? AlteradoEm { get; private set; }  
+        public DateTime? CriadoEm { get; private set; }
+        public DateTime? AlteradoEm { get; private set; }
+
+        // Propriedades de navegação
+        //public IList<Permissao> Permissoes { get; private set; } 
 
         // EF
-        protected Usuario()
-        { }
+        protected Usuario() { }
 
+        // Construtor
         public Usuario(string nome,
                        string sobrenome,
                        string apelido,
@@ -36,5 +40,7 @@ namespace Empresa.Projeto.Domain
             CriadoEm = criadoEm;
             AlteradoEm = alteradoEm;
         }
+
+        // Metodos
     }
 }
