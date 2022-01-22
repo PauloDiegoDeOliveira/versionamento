@@ -23,5 +23,14 @@ namespace Empresa.Projeto.Infra.Repositories
                                         .ToListAsync();
             return consultado;
         }
+
+        public async Task<Usuario> GetBuscarEmailAsync(string email)
+        {
+            var consultado = await appContext.Usuarios                                  
+                                   .Where(x => x.Email.ToLower() == email.ToLower())
+                                   .AsNoTracking()
+                                   .FirstOrDefaultAsync();
+            return consultado;
+        }
     }
 }

@@ -7,7 +7,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Empresa.Projeto.API
 {
@@ -43,6 +46,10 @@ namespace Empresa.Projeto.API
                         new string[] {}
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             return services;
@@ -63,7 +70,7 @@ namespace Empresa.Projeto.API
                         else
                         {
                             options.SwaggerEndpoint($"/Projeto/API/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-                        }                       
+                        }
                     }
                 });
 

@@ -2,8 +2,10 @@
 using Empresa.Projeto.Domain;
 using Empresa.Projeto.Infra;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Empresa.Projeto.Service
 {
@@ -11,12 +13,18 @@ namespace Empresa.Projeto.Service
     {
         private readonly IUsuarioRepository usuarioRepository;
         private readonly IMapper mapper;
+        private readonly IConfiguration configuration;
+        private readonly IJWTService jwt;
 
         public UsuarioService(IUsuarioRepository usuarioRepository,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IConfiguration configuration,
+                              IJWTService jwt)
         {
             this.usuarioRepository = usuarioRepository;
             this.mapper = mapper;
+            this.configuration = configuration;
+            this.jwt = jwt;
         }
 
         public async Task<List<ViewUsuario>> GetAllAsync()
@@ -75,6 +83,49 @@ namespace Empresa.Projeto.Service
                 return null;
             }
             return mapper.Map<List<ViewUsuario>>(consulta);
+        }
+
+        public async Task<ViewLogin> AutenticacaoAsync(ViewAutenticacao viewAutenticacao)
+        {
+            var consulta = await usuarioRepository.GetBuscarEmailAsync(viewAutenticacao.Email);
+            if (consulta == null)
+            {
+                return null;
+            }
+
+            //await usuarioRepository.UltimoAcessoAsync(usuarioConsultado);
+
+            if (await ValidaEAtualizaHashAsync(viewAutenticacao, consulta.Senha))
+            {
+                var usuarioLogado = mapper.Map<ViewLogin>(consulta);
+
+                usuarioLogado.Token = jwt.GerarToken(consulta);
+                usuarioLogado.Mensagem = "Usuário autenticado com sucesso!";
+                usuarioLogado.TokenExpira = DateTime.Now.AddMinutes(Convert.ToInt32(configuration.GetSection("JWT:ExpiraEmMinutos").Value)).ToString();
+                return usuarioLogado;
+            }
+            return null;
+        }
+
+        private static async Task<bool> ValidaEAtualizaHashAsync(ViewAutenticacao viewAutenticacao, string hash)
+        {
+            await Task.CompletedTask;
+            var passwordHasher = new PasswordHasher<ViewAutenticacao>();
+            var status = passwordHasher.VerifyHashedPassword(viewAutenticacao, hash, viewAutenticacao.Senha);
+            switch (status)
+            {
+                case PasswordVerificationResult.Failed:
+                    return false;
+
+                case PasswordVerificationResult.Success:
+                    return true;
+
+                case PasswordVerificationResult.SuccessRehashNeeded:
+                    return true;
+
+                default:
+                    throw new InvalidOperationException();
+            }
         }
     }
 }

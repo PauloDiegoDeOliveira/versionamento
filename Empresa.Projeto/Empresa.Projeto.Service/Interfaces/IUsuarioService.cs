@@ -11,5 +11,6 @@ namespace Empresa.Projeto.Service
         Task<ViewUsuario> PutAsync(PutUsuario put);
         Task<ViewUsuario> DeleteAsync(int id);      
         Task<List<ViewUsuario>> GetBuscarNomeAsync(string nome); 
+        Task<ViewLogin> AutenticacaoAsync(ViewAutenticacao viewAutenticacao); 
     }
 }
